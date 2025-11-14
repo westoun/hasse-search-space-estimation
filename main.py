@@ -15,7 +15,7 @@ import warnings
 warnings.filterwarnings("ignore")
 
 
-def run_experiment(GateSet: List[Type], gate_count: int, qubit_num: int, sample_num: int, circuit_count: int, seed_num: int = 30, target_dir: str = "results") -> None:
+def run_experiment(GateSet: List[Type], gate_count: int, qubit_num: int, sample_num: int, seed_num: int = 30, target_dir: str = "results") -> None:
     print("\nStarting new experiment run.")
 
     experiment = {
@@ -28,7 +28,6 @@ def run_experiment(GateSet: List[Type], gate_count: int, qubit_num: int, sample_
             "gate_count": gate_count,
             "qubit_num": qubit_num,
             "sample_num": sample_num,
-            "circuit_count": circuit_count,
             "seed_num": seed_num
         },
         "results": {
@@ -52,7 +51,7 @@ def run_experiment(GateSet: List[Type], gate_count: int, qubit_num: int, sample_
         np_random.seed(seed)
 
         population = generate_population(
-            GateSet=GateSet, gate_count=gate_count, qubit_num=qubit_num, circuit_count=circuit_count)
+            GateSet=GateSet, gate_count=gate_count, qubit_num=qubit_num, circuit_count=sample_num)
 
         simulation_time = run_simulation(circuits=population)
 
@@ -92,9 +91,9 @@ def run_experiment(GateSet: List[Type], gate_count: int, qubit_num: int, sample_
 if __name__ == "__main__":
 
     qubit_nums = [3, 4, 5, 6, 7]
-    gate_counts = [5, 10, 15, 20, 25]
+    gate_counts = [5, 10, 15, 20, 25, 30, 35]
 
     for qubit_num in qubit_nums:
         for gate_count in gate_counts:
             run_experiment(GateSet=CLIFFORD_PLUS_T, gate_count=gate_count, qubit_num=qubit_num,
-                           sample_num=10_000, circuit_count=100_000, seed_num=30)
+                           sample_num=100_000, seed_num=30)
