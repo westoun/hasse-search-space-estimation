@@ -1,0 +1,8 @@
+services:
+  hasse-sse:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    command: python3 main.py
+    volumes:
+      - ./results:/app/results
