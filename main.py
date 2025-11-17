@@ -91,9 +91,9 @@ def run_experiment(GateSet: List[Type], gate_count: int, qubit_num: int, sample_
 if __name__ == "__main__":
 
     qubit_nums = [3, 4, 5, 6, 7]
-    gate_counts = [5, 10, 15, 20, 25, 30, 35]
+    gate_counts = [5, 10, 15, 20]
 
     for qubit_num in qubit_nums:
         for gate_count in gate_counts:
             run_experiment(GateSet=CLIFFORD_PLUS_T, gate_count=gate_count, qubit_num=qubit_num,
-                           sample_num=100_000, seed_num=30)
+                           sample_num=500_000, seed_num=30)
