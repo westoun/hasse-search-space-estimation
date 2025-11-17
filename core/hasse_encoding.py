@@ -10,7 +10,8 @@ from quasim.gates import (
     Swap,
 )
 
-from core.commutativity import commutes
+# from core.commutativity import commutes
+from core.clifford_commutativity import commutes
 
 
 def circuit_to_graph(circuit: Circuit) -> nx.DiGraph:
