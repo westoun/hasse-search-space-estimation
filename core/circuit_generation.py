@@ -7,7 +7,7 @@ from quasim.gates import (
     IGate,
     H
 )
-from random import choice, randint, sample
+from random import randint, sample, choices
 from typing import List, Type
 
 
@@ -29,7 +29,17 @@ def generate_population(GateSet: List[Type], gate_count: int, qubit_num: int, ci
 
 def generate_random_gate(qubit_num: int, GateSet: List[Type]) -> IGate:
     # assume each gate type to be equally likely
-    GateType = choice(GateSet)
+
+    weights = []
+    for GateType in GateSet:
+        if issubclass(GateType, CGate) or GateType == Swap:
+            weights.append(qubit_num * (qubit_num - 1))
+        elif issubclass(GateType, CCGate):
+            weights.append(qubit_num * (qubit_num - 1) * (qubit_num - 2))
+        else:
+            weights.append(qubit_num)
+
+    GateType = choices(GateSet, weights=weights, k=1)[0]
 
     if "theta" in vars(GateType)["__annotations__"]:
         raise NotImplementedError(
