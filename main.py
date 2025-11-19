@@ -163,11 +163,13 @@ def run_experiment(gate_count: int, qubit_num: int, sample_num: int, seed_num: i
 
     experiment["meta"]["end"] = get_timestamp()
 
-    target_path = f"{target_dir}/experiment_{gate_count}g{qubit_num}q_{experiment['meta']['start']}.json"
+    target_path = f"{target_dir}/experiment_{qubit_num}q{gate_count}g_{experiment['meta']['start']}.json"
     save_to_json(experiment, target_path)
 
 
 if __name__ == "__main__":
+
+    MAX_SAMPLE_SIZE = 100_000_000
 
     qubit_nums = [3, 4, 5, 6]
     gate_counts = [4, 6, 8, 10, 12]
@@ -179,7 +181,7 @@ if __name__ == "__main__":
             print(
                 f"\nSetting up experiment with q={qubit_num} and g={gate_count}")
 
-            while sample_num < 5_000_000:
+            while sample_num < MAX_SAMPLE_SIZE:
 
                 if is_valid_sample_size(gate_count, qubit_num, sample_num, margin=0.05, confidence=0.9):
                     break
@@ -187,7 +189,7 @@ if __name__ == "__main__":
                 sample_num *= 2
             else:
                 print(
-                    f"Next sample num would exceed feasability threshold of 100_000_000 samples. Skipping g>={gate_count}")
+                    f"Next sample num would exceed feasability threshold of {MAX_SAMPLE_SIZE} samples. Skipping g>={gate_count}")
                 break
 
             print(
